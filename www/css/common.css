@@ -1,0 +1,129 @@
+html, body{
+    height: 100%;
+}
+.clear{ clear: both; }
+
+.wrapper{
+    min-height: 100%;
+    height: 1px;
+    min-width: 1000px;
+    position: relative;
+    margin: auto;
+    background: #C0AB3E;
+    font-family: 'Oswald', sans-serif;
+    color: #1F1125;
+}
+
+.header_wrapper{
+    height: 70px;
+    background: #394054;
+}
+.header{
+    padding: 10px 25px;
+}
+.header h1{
+    margin: 0;
+}
+.header h1 a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.content_wrapper{
+    /*height: calc(100% - 140px);*/
+    min-height: calc(100% - 140px);
+    background: #70778B;
+}
+
+/*Navigation*/
+.nav_wrapper{
+    min-height: calc(100%);
+    width: 200px;
+    float: left;
+    padding: 0 10px 20px;
+    background: #C0AB3E;
+}
+.nav_wrapper h3{
+    margin-bottom: 5px;
+}
+.nav{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.nav li{
+    transition: background .4s;
+    cursor: pointer;
+}
+.nav li:hover{
+    background: #A18C21;    
+}
+.nav li a{    
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 0;
+}
+/*Navigation*/
+
+
+.content{
+    float: right;
+    width: calc(100% - 250px);
+    padding: 10px 15px 15px;
+}
+.content h2{
+    margin-top: 5px;
+}
+
+/*Video*/
+.videos{}
+.videos .item{
+    float: left;
+    width: 230px;
+    height: 175px;
+    margin: 0 15px 15px 0;
+    
+}
+.videos .item .preview_wrapper{
+    height: 130px;
+    background: #fff;
+    position: relative;
+}
+.videos .item .preview_wrapper .preview{
+    width: 210px;
+    height: 130px;
+    overflow: hidden;
+    cursor: pointer;
+}
+/*Temp*/
+.videos .item .preview_wrapper .preview img{
+    max-height: 130px;
+}
+/*/Temp*/
+.videos .item .preview_wrapper .duration{
+    display: block;
+    padding: 1px 7px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: rgba(31, 17, 37, .7);
+    font-size: 14px;
+    color: #fff;
+}
+.videos .item h5{
+    margin: 0;
+    padding: 3px 2px;
+}
+.videos .item h5 a{
+    text-decoration: none;
+    color: #000;
+}
+/*/Video*/
+
+.footer_wrapper{    
+    width: 100%;
+    height: 70px;
+    background: #151E35;
+}
