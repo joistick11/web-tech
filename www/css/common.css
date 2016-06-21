@@ -3,6 +3,20 @@ html, body{
 }
 .clear{ clear: both; }
 
+#to_top{
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, .9);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    line-height: 50px;
+    cursor: pointer;
+}
+
 .wrapper{
     min-height: 100%;
     height: 1px;
@@ -68,6 +82,10 @@ html, body{
     padding: 0 10px 20px;
     background: #C0AB3E;
 }
+.nav_wrapper.fixed{
+    position: fixed;
+    top: 0;
+}
 .nav_wrapper h3{
     margin-bottom: 5px;
 }
@@ -92,13 +110,26 @@ html, body{
 }
 /*Navigation*/
 
-.content .content_nav_wrapper{
-    background: #394054;   
+.content .content_nav_wrapper{       
     margin: 15px 0;
+    height: 50px;
+}
+.content #content_menu{
+    height: 35px;
+    background: #394054;
     position: relative;
 }
+.content #content_menu.fixed{
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    margin: 0;
+    width: calc(100% - 20px);
+}
+.content #content_menu.fixed .content_nav{
+    margin: 0;
+}
 .content .content_nav_wrapper .content_nav{
-    transition: all 1s;
 }
 .content .content_nav_wrapper .title{
     display: none;
@@ -192,13 +223,7 @@ html, body{
 }
 
 /*Responsivity*/
-@media (max-width: 700px){
-    .content{
-        width: calc(100% - 30px);
-    }
-    .nav_wrapper{
-        display: none;
-    }
+@media (max-width: 1000px){
     .content .content_nav_wrapper .content_nav{
         display: none;
         margin: 0;
@@ -226,7 +251,14 @@ html, body{
     .content .content_nav_wrapper .content_nav li a{
         text-align: center;
     }
-    
+}
+@media (max-width: 800px){
+    .content{
+        width: calc(100% - 30px);
+    }
+    .nav_wrapper{
+        display: none;
+    }    
     .videos .item{
         float: none;
         width: auto;
