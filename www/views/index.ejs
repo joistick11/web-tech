@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/common.css" />
+    <link href='https://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header_wrapper">
+            <div class="header">
+                <h1><a href="/">My site.com</a></h1>
+                <div class="user_info">
+                    <div class="photo">
+                        <img src="/images/photo.jpg" alt="avatar" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content_wrapper">
+            <div class="nav_wrapper" id="left_menu">
+                <h3>Main</h3>
+                <ul class="nav">
+                    <li><a href="#1">Link 1</a></li>
+                    <li><a href="#1">Link 2</a></li>
+                    <li><a href="#1">Link 3</a></li>
+                    <li><a href="#1">Link 4</a></li>
+                    <li><a href="#1">Link 5</a></li>
+                </ul>
+                
+                <h3>Subscriptions</h3>
+                <ul class="nav">
+                    <li><a href="#1">Link 1</a></li>
+                    <li><a href="#1">Link 2</a></li>
+                    <li><a href="#1">Link 3</a></li>
+                    <li><a href="#1">Link 4</a></li>
+                    <li><a href="#1">Link 5</a></li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="content_nav_wrapper">
+                    <div id="content_menu">
+                        <div class="title">Menu</div>
+                        <ul class="content_nav">
+                            <li><a href="#1">Gaining popularity</a></li>
+                            <li><a href="#1">Recent</a></li>
+                            <li><a href="#1">Subscriptions</a></li>
+                            <li><a href="#1">Best by categories</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <h2>Subscriptions</h2>
+                
+                <div class="videos">
+
+                    <%data.forEach(function(data){%>
+                        <div class="item">
+                            <div class="delete" data-id="<%=data.id%>">x</div>
+                            <div class="preview_wrapper">
+                                <div class="preview">
+                                    <img src="<%=data.pic_link%>" alt="Video 1" />
+                                </div>
+                                <span class="duration">01:30</span>
+                            </div>
+                            <h5><a href="#1"><%=data.name%></a></h5>
+                            <div class="clear"></div>
+                        </div>
+                    <% }); %>
+
+                    <div class="item">
+                        <div class="preview_wrapper add">
+                            <a href="/add">+</a>
+                        </div>
+                    </div>
+                    
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="clear"></div>       
+        </div>
+            
+        <div class="footer_wrapper"></div>
+    </div>        
+    <div id="to_top">up</div>
+    
+    <script src="/js/scripts.js"></script>
+    <script>
+        var deleteButtons = document.querySelectorAll('.delete');
+        for(var i = 0; i < deleteButtons.length; i++){
+            deleteButtons[i].addEventListener('click', function() {
+                var itemId = this.getAttribute('data-id');
+                var request = new XMLHttpRequest();
+                var request_text = 'delete?id=' + encodeURIComponent(itemId);
+                request.open('delete', request_text);
+                request.send();
+                request.addEventListener('load', function () {
+                    location.reload();
+                });
+            });
+        }
+    </script>
+</body>
+</html>
