@@ -1,10 +1,71 @@
-var express = require('express');
-var sqlite = require('sqlite3');
+var express         = require('express');
+var expressSession  = require('express-session');
+var sqlite          = require('sqlite3');
+var passport        = require('passport');
+var bodyParser    = require('body-parser');
+var cookieParser    = require('cookie-parser');
+var LocalStrategy   = require('passport-local').Strategy;
 
 var app = express();
+var db = new sqlite.Database('db.sqlite');
+
+// Static resources (css, images, js)
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-var db = new sqlite.Database('db.sqlite');
+
+app.use(cookieParser());
+app.use(bodyParser());
+app.use(expressSession({ secret: 'SECRET' }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+// Authentication
+passport.use(new LocalStrategy(
+    {
+        usernameField: 'login',
+        passwordFieldL: 'password'
+    },
+    function(login, password, done) {
+    db.get('SELECT id, login FROM users WHERE login = ? AND password = ?', login, password, function(err, row) {
+        console.log("111!!");
+        if (!row) return done(null, false);
+        return done(null, row);
+    });
+}));
+passport.serializeUser(function(user, done) {
+    return done(null, user.id);
+});
+passport.deserializeUser(function(id, done) {
+    db.get('SELECT id, login FROM users WHERE id = ?', id, function(err, row) {
+        if (!row) return done(null, false);
+        return done(null, row);
+    });
+});
+
+app.get('/login', function(request, response){
+    if (request.isAuthenticated()) {
+        response.redirect('/');
+    }
+    response.render('login.ejs');
+});
+app.post('/login', passport.authenticate('local',
+    {session: true, successRedirect: '/', failureRedirect: '/login' }
+));
+
+app.all('/*', function(request, response, next) {
+    if (!request.isAuthenticated()) {
+        response.redirect('/login');
+    }
+    next();  // call next() here to move on to next middleware/router
+});
+
+app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
 
 app.get('/', function(request, response){
     db.all('select * from videos', function(err, data){
@@ -31,6 +92,9 @@ app.delete('/delete', function (request, response) {
     });
 });
 
+app.get('/news', function(request, response){
+    response.render('news.ejs');
+});
 app.listen(process.env.PORT || 1337, function () {
    console.log('App is listening on 1337 local');
 });
