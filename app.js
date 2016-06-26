@@ -2,7 +2,7 @@ var express         = require('express');
 var expressSession  = require('express-session');
 var sqlite          = require('sqlite3');
 var passport        = require('passport');
-var bodyParser    = require('body-parser');
+var bodyParser      = require('body-parser');
 var cookieParser    = require('cookie-parser');
 var LocalStrategy   = require('passport-local').Strategy;
 
@@ -13,6 +13,7 @@ var db = new sqlite.Database('db.sqlite');
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
+// Auth initialize
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(expressSession({ secret: 'SECRET' }));
@@ -25,7 +26,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(
     {
         usernameField: 'login',
-        passwordFieldL: 'password'
+        passwordField: 'password'
     },
     function(login, password, done) {
     db.get('SELECT id, login FROM users WHERE login = ? AND password = ?', login, password, function(err, row) {
@@ -43,7 +44,6 @@ passport.deserializeUser(function(id, done) {
         return done(null, row);
     });
 });
-
 app.get('/login', function(request, response){
     if (request.isAuthenticated()) {
         response.redirect('/');
@@ -53,19 +53,17 @@ app.get('/login', function(request, response){
 app.post('/login', passport.authenticate('local',
     {session: true, successRedirect: '/', failureRedirect: '/login' }
 ));
-
 app.all('/*', function(request, response, next) {
     if (!request.isAuthenticated()) {
         response.redirect('/login');
     }
     next();  // call next() here to move on to next middleware/router
 });
-
-app.get('/logout', function (req, res) {
-    req.logout();
-    res.redirect('/');
+app.get('/logout', function (request, response) {
+    request.logout();
+    response.redirect('/');
 });
-
+// Authentication end
 
 app.get('/', function(request, response){
     db.all('select * from videos', function(err, data){
@@ -78,7 +76,6 @@ app.get('/add', function(request, response){
     response.render('add_video.ejs');
 });
 app.post('/add', function(request, response){
-    console.log('request on add');
     var statement = 'insert into videos (name, link, pic_link) values(?, ?, ?)';
     db.run(statement, request.query.video_name, request.query.video_link, request.query.video_pic, function () {
         response.send('added');
