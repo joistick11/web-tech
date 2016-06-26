@@ -31,6 +31,6 @@ app.delete('/delete', function (request, response) {
     });
 });
 
-app.listen('11337', function () {
-   console.log('App is listening on 11337');
+app.listen(process.env.PORT || 1337, function () {
+   console.log('App is listening on 1337 local');
 });
