@@ -1,5 +1,4 @@
 var express         = require('express');
-var expressSession  = require('express-session');
 var sqlite          = require('sqlite3');
 var passport        = require('passport');
 var bodyParser      = require('body-parser');
@@ -15,8 +14,8 @@ app.set('view engine', 'ejs');
 
 // Auth initialize
 app.use(cookieParser());
-app.use(bodyParser());
-app.use(expressSession({ secret: 'SECRET' }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'secret', resave: false, saveUninitialized: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -53,6 +52,13 @@ app.get('/login', function(request, response){
 app.post('/login', passport.authenticate('local',
     {session: true, successRedirect: '/', failureRedirect: '/login' }
 ));
+app.post('/signup', function(request, response){
+    var statement = 'insert into users (login, password) values(?, ?)';
+    db.run(statement, request.body.login, request.body.password, function () {
+        response.redirect('login/');
+    });
+});
+
 app.all('/*', function(request, response, next) {
     if (!request.isAuthenticated()) {
         response.redirect('/login');

@@ -15,30 +15,58 @@
             </div>
         </div>
         <div class="content_wrapper">
-            <div class="content" style="padding-top: 60px;">
+            <div class="content" style="padding-top: 30px;">
                 <h2>Login</h2>
                 <div class="content_text">
                     <form method="POST" action="/login">
                         <table id="login_form">
-                           <tr>
+                            <tr>
                                 <td>
                                     Login
                                 </td>
                                 <td>
                                     <label><input id="login" name="login" /></label>
                                 </td>
-                           </tr>
-                           <tr>
+                            </tr>
+                            <tr>
                                 <td>
                                     Password
                                 </td>
                                 <td>
-                                    <label><input id="password" name="password" /></label>
+                                    <label><input id="password" name="password" type="password" /></label>
                                 </td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td><input type="submit" name="button" value="Log In" id="login_button" /></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+                <h2 style="padding-top: 30px;">Or Sing Up</h2>
+                <div class="content_text">
+                    <form method="POST" action="/signup">
+                        <table id="singup_form">
+                            <tr>
+                                <td>
+                                    Login
+                                </td>
+                                <td>
+                                    <label><input id="s_login" name="login" /></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Password
+                                </td>
+                                <td>
+                                    <label><input id="s_password" name="password" type="password" /></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" name="button" value="Sing Up" id="singup_button" /></td>
                             </tr>
                         </table>
                     </form>
